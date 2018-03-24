@@ -92,8 +92,8 @@ dest.shape("circle")
 dest.penup()
 dest.speed(0)
 #obstacle position - Random
-destx = random.randint(1, 9)
-desty = random.randint(5, 9)
+destx = random.randint(5, 9)
+desty = random.randint(6, 9)
 dest.setposition(destx, desty)
 
 #These can be deleted later, used for testing purposes
@@ -118,17 +118,20 @@ adj = dest.xcor() - robot.xcor()
 turnAngle = format(math.degrees(math.acos(adj / hyp)), '.4f')
 degrees = float(turnAngle)
 #print("Angle to turn: " + str(degrees))
-easygui.msgbox(str(degrees) + " degrees.","Angle to turn"  )
+easygui.msgbox(str(degrees) + " degrees. Press OK to turn the robot","Angle to turn"  )
 
 #turn the robot
 #delay = input("Press any button to face robot towards destination.")
-easygui.msgbox("Press OK to turn the robot")
+#easygui.msgbox("Press OK to turn the robot")
 robot.setheading(degrees)
 
+#Is robot at final destination?
+#Distance between robot and destination
+distance = math.sqrt(math.pow(dest.xcor() - robot.xcor(),2) + math.pow(dest.ycor() - robot.ycor(),2 ))
 
 ######
-while 1:
-
+while distance > 0.7:
+    #easygui.textbox("Distance = " + str(distance), "Distance")
     #Does the robot detect a colision?
     #print("Has the robot detected a colision y/n")
     #collision = input("Please enter y or n: ")
@@ -154,6 +157,8 @@ while 1:
         turnAngle = format(math.degrees(math.acos(adj / hyp)), '.4f')
         degrees = float(turnAngle)
         robot.setheading(degrees)
+        #update distance
+        distance = math.sqrt(math.pow(dest.xcor() - robot.xcor(), 2) + math.pow(dest.ycor() - robot.ycor(), 2))
 
     else:
         # Move robot 1 unit in new direction
@@ -162,26 +167,8 @@ while 1:
         newfbot_y = math.sin(math.radians(degrees))
         # move robot location
         robot.setposition(newfbot_x + robot.xcor(), newfbot_y + robot.ycor())
+        #update distance
+        distance = math.sqrt(math.pow(dest.xcor() - robot.xcor(), 2) + math.pow(dest.ycor() - robot.ycor(), 2))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-delay = input("Press any button.")
+easygui.textbox("You have arrived at your final destination.  End Sim", "The END" )
